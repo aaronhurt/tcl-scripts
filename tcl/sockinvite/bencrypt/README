@@ -1,0 +1,13 @@
+## simple blowfish utillities
+## by leprechau @ EFnet
+
+1) Type 'make all'.
+
+2) Type each command to see usage.
+	./bencrypt
+
+	./bdecrypt
+
+	./bencpass
+
+3) That's it, simple enough.

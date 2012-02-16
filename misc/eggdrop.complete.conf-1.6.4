@@ -1,0 +1,234 @@
+#! /path/to/executable/eggdrop
+set nick "MyB0t"
+set altnick "$nick-"
+set realname "$nick"
+set owner "You"
+set username "[exec id -un]"
+set userfile "$nick.user"
+set chanfile "$nick.chan"
+listen 13334 all
+set servers {
+  irc.efnet.pl:6667
+}
+
+set admin "$owner"
+set network "EFnet"
+set timezone "EST"
+set offset "5"
+#set my-hostname "virtual.host.com"
+#set my-ip "99.99.0.0"
+addlang "english"
+set max-logs 5
+set max-logsize 1024
+set quick-logs 0
+logfile mco * "logs/eggdrop.log"
+set log-time 1
+set keep-all-logs 0
+set logfile-suffix ".%d%b%Y"
+set switch-logfiles-at 300
+set quiet-save 0
+set console "mkcobxs"
+set sort-users 0
+set help-path "help/"
+set temp-path "/tmp"
+set motd "text/motd"
+set telnet-banner "text/banner"
+set userfile-perm 0600
+set protect-telnet 0
+set dcc-sanitycheck 0
+set ident-timeout 5
+set require-p 1
+set open-telnets 0
+set stealth-telnets 0
+set use-telnet-banner 0
+set connect-timeout 15
+set dcc-flood-thr 3
+set telnet-flood 5:60
+set paranoid-telnet-flood 1
+set resolve-timeout 15
+
+#set firewall "!sun-barr.ebay:3666"
+#set nat-ip "127.0.0.1"
+#set reserved-portrange 2010:2020
+set ignore-time 15
+set hourly-updates 00
+set notify-newusers "$owner"
+set default-flags "hp"
+set whois-fields "url birthday"
+set remote-boots 2
+set share-unlinks 1
+set die-on-sighup 0
+set die-on-sigterm 1
+bind dcc n tcl *dcc:tcl
+bind dcc n set *dcc:set
+set must-be-owner 0
+unbind dcc n simul *dcc:simul
+
+set max-dcc 50
+set dcc-portrange 1024:65535
+set enable-simul 1
+set allow-dk-cmds 1
+set dupwait-timeout 5
+
+set mod-path "modules/"
+loadmodule dns
+loadmodule channels
+set ban-time [expr 120 + [rand 30]]
+set exempt-time 60
+set invite-time 60
+# set force-expire 0
+set share-greet 0
+set use-info 1
+
+set global-flood-chan 15:30
+set global-flood-deop 2:10
+set global-flood-kick 2:10
+set global-flood-join 6:60
+set global-flood-ctcp 3:60
+set global-flood-nick 6:60
+
+set global-aop-delay 5:30
+
+set global-idle-kick 0
+set global-chanmode "nt"
+set global-stopnethack-mode 0
+set global-revenge-mode 1
+
+set global-chanset {
+        -autoop         -autovoice
+        -bitch          +cycle
+        +dontkickops    +dynamicbans
+        +dynamicexempts +dynamicinvites
+        -enforcebans    +greet
+        -inactive       -nodesynch
+        -protectfriends +protectops
+        -revenge        -revengebot
+        -secret         -seen
+        +shared         -statuslog
+        +userbans       -userexempts
+        -userinvites
+}
+
+loadmodule server
+set net-type 5
+set init-server { putserv "MODE $botnick +i-ws" }
+set default-port 6667
+set keep-nick 1
+set use-ison 1
+set strict-host 0
+set quiet-reject 1
+set lowercase-ctcp 0
+
+set answer-ctcp 2
+set flood-msg 5:60
+set flood-ctcp 3:60
+set never-give-up 1
+set strict-servernames 0
+set server-cycle-wait 60
+set server-timeout 15
+set servlimit 0
+set check-stoned 1
+set use-console-r 0
+set debug-output 0
+set serverror-quit 1
+set max-queue-msg 300
+set trigger-on-ignore 0
+set double-mode 0
+set double-server 0
+set double-help 0
+set optimize-kicks 1
+
+# [0/1] some nets use umode +r to mean a restricted connection. If this is your
+# case, and you want your bot to leave restricted servers and jump to the
+# next one on his server list, then set it to 1.
+# Automatically set to 0 for net-type 0/2/3/4, set to 1 for net-type 1.
+# Only use this if you set net-type 5
+#set check-mode-r 1
+
+# This variable sets the maximum nick length allowed on the network. Most
+# only support 9. The maximum supported by eggdrop is 32.
+set nick-len 32
+
+##### CTCP MODULE #####
+
+# this provides the normal ctcp replies that you'd expect *RECOMMENDED*
+loadmodule ctcp
+
+set ctcp-mode 0
+set ctcp-version "Go away"
+set ctcp-finger "Go away"
+set ctcp-userinfo "Go away"
+loadmodule irc
+set bounce-bans 0
+set bounce-modes 0
+set max-bans 20
+set max-modes 30
+
+set kick-fun 0
+set ban-fun 0
+set learn-users 0
+set wait-split 600
+set wait-info 180
+set mode-buf-length 200
+
+unbind msg - ident *msg:ident
+unbind msg - addhost *msg:addhost
+bind msg - itsme *msg:ident
+set no-chanrec-info 0
+set bounce-exempts 0
+set bounce-invites 0
+set max-exempts 20
+set max-invites 20
+ set use-exempts 0
+ set use-invites 0
+set prevent-mixing 1
+set kick-method 1
+set modes-per-line 6
+
+#set include-lk 1
+#set use-354 0
+#set rfc-compliant 1
+
+loadmodule transfer
+set max-dloads 3
+set dcc-block 1024
+set copy-to-tmp 1
+set xfer-timeout 30
+
+loadmodule share
+set allow-resync 0
+#set resync-time 900
+set private-global 0
+#set private-globals "mnot"
+#set private-user 0
+#set override-bots 0
+loadmodule compress
+set share-compressed 1
+set compress-level 9
+#loadmodule filesys
+set files-path "[exec pwd]"
+set incoming-path "[exec pwd]"
+set upload-to-pwd 1
+set filedb-path ""
+set max-file-users 20
+set max-filesize 1024
+loadmodule notes
+
+set notefile "notes"
+set max-notes 50
+set note-life 60
+set allow-fwd 0
+set notify-users 1
+set notify-onjoin 1
+loadmodule console
+
+set console-autosave 1
+set force-channel 0
+set info-party 0
+#loadmodule seen
+checkmodule blowfish
+source scripts/alltools.tcl
+source scripts/action.fix.tcl
+source scripts/compat.tcl
+source scripts/userinfo.tcl
+loadhelp userinfo.help

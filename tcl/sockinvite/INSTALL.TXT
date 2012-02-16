@@ -1,0 +1,34 @@
+## socketed invite script for glftpd/eggdrop
+## version 1.0a by leprechau@EFnet
+
+##########
+directions
+##########
+
+NOTE: You will need a static compiled tclsh in /glftpd/bin/tclsh!!
+
+A) Build bencrypt
+
+	1) cd bencrypt
+	2) make crypt
+	3) cp bencrypt /glftpd/bin/
+	4) cd ..
+
+B) Edit shell_invite.tcl
+
+	1) Config settings section (pretty self explanatory)
+	2) Config glftpd to call shell_invite.tcl for site invite command
+		a) add to glftpd.conf:	SITE PINVITE EXEC /bin/shell_invite.tcl
+					custom-pinvite	*
+
+	3) chmod +x shell_invite.tcl
+	4) cp shell_invite.tcl /glftpd/bin/
+
+C) Edit bot_invite.tcl
+
+	1) Config settings section (once again, pretty simple)
+	2) Config your bot's conf file to source bot_invite.tcl
+
+D) You are done....have questions, don't ask me :P
+
+#EOF

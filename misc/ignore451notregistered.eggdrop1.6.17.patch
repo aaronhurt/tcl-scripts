@@ -1,0 +1,15 @@
+diff -urN eggdrop1.6.17/src/mod/server.mod/servmsg.c eggdrop1.6.17-new/src/mod/server.mod/servmsg.c
+--- eggdrop1.6.17/src/mod/server.mod/servmsg.c      Sun Jul 25 15:39:01 2004
++++ eggdrop1.6.17-new/src/mod/server.mod/servmsg.c      Wed Oct 20 23:46:32 2004
+@@ -861,8 +861,10 @@
+    * (minutely) sending of joins occurs before the bot does its ping reply.
+    * Probably should do something about it some time - beldin
+    */
+-  putlog(LOG_MISC, "*", IRC_NOTREGISTERED1, from);
+-  nuke_server(IRC_NOTREGISTERED2);
++  /* Unreal IRCD sucks, so lets just comment this out and ignore it */
++//  putlog(LOG_MISC, "*", IRC_NOTREGISTERED1, from);
++//  nuke_server(IRC_NOTREGISTERED2);
++    putlog(LOG_MISC, "*", "Recieved 451 - NOT REGISTERED from %s - IGNORING!", from);
+   return 0;
+ }
