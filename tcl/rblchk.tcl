@@ -22,9 +22,9 @@ namespace eval ::rblchk {
 	## location of dig binary including path (default should work on most systems)
 
 	variable rbls; array set rbls {
-		countries.blackholes.us {{Problematic Countries} +1.0}
 		ircbl.ahbl.org {{Abusive Hosts} +2.0}
 		sbl-xbl.spamhaus.org {{Spamhaus combined zone} +3.0}
+		rbl.efnetrbl.org {{Undesirable clients} +3.0}
 		dul.dnsbl.sorbs.net {{Dynamic IPs} -1.0}
 	}
 	## array of rbls, descriptions, and a score for each
@@ -112,9 +112,11 @@ namespace eval ::rblchk {
 	proc score {host args} {
 		set total 0; set details [list]
 		foreach rbl [array names ::rblchk::rbls] {
-			if {(![string equal {NULL} [lindex [set check [::rblchk::check $host $rbl]] 2]]) && (![string equal {NULL} [lindex $check 3]])} {
+			if {![string equal {NULL} [lindex [set check [::rblchk::check $host $rbl]] 2]]} {
 				set total [expr [subst {$total [set score [lindex $::rblchk::rbls($rbl) end]]}]]
-				lappend details [list $score $rbl [lindex $::rblchk::rbls($rbl) 0] [lindex $check end]]
+				if {![string equal {NULL} [lindex $check 3]]} {
+					lappend details [list $score $rbl [lindex $::rblchk::rbls($rbl) 0] [lindex $check 3]]
+				} else { lappend details [list $score $rbl [lindex $::rblchk::rbls($rbl) 0] {}] }
 			}
 		}; if {![string length $details]} {set details NULL}
 		if {[string length [set cmd [::rblchk::getOpt {-ns -type -callback} -callback $args]]]} {
