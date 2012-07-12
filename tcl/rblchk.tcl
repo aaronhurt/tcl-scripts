@@ -25,6 +25,7 @@ namespace eval ::rblchk {
 		ircbl.ahbl.org {{Abusive Hosts} +2.0}
 		sbl-xbl.spamhaus.org {{Spamhaus combined zone} +3.0}
 		rbl.efnetrbl.org {{Undesirable clients} +3.0}
+		dnsbl.dronebl.org {{Abusable IPs} +3.0}
 		dul.dnsbl.sorbs.net {{Dynamic IPs} -1.0}
 	}
 	## array of rbls, descriptions, and a score for each
