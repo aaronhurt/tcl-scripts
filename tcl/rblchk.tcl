@@ -54,8 +54,15 @@ namespace eval ::rblchk {
 		set type [::rblchk::getOpt {-ns -type -callback} -type $args]; if {![string length $type]} {set type A}
 		set ns [::rblchk::getOpt {-ns -type -callback} -ns $args]; if {[string length $ns]} {set ns "@$ns "}
 		## do our lookup...call our digbin...
-		if {[catch {set lookup [eval exec $::rblchk::digbin $ns$host $type]} xError] != 0} {
-			return -code error "Error calling dig:  ($::rblchk::digbin $ns$host $type): $xError"
+		if {[catch {set lookup [eval exec $::rblchk::digbin +time=1 $ns$host $type]} xError] != 0} {
+			## handle error codes properly and cleanup xError if possible
+			switch -exact -- [lindex [split $::errorCode] end] {
+				1 {set xError "Usage error"}
+				8 {set xError "Couldn't open batch file"}
+				9 {set xError "No reply from server"}
+				10 {set xError "Internal error"}
+			}
+			return -code error "Error calling dig: ($::rblchk::digbin $ns$host $type): $xError"
 		}
 		## parse out our info from dig output
 		foreach line [split [string trim [regsub -all {;(.+?)\n} $lookup {}]] \n] {
